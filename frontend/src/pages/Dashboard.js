@@ -1,11 +1,24 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../components/ui/dialog";
 import { toast } from "sonner";
 import { Plus, LogOut, Inbox as InboxIcon, Sparkles } from "lucide-react";
 
@@ -25,9 +38,9 @@ export default function Dashboard({ user, onLogout }) {
 
   const fetchBoards = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const response = await axios.get(`${API}/boards`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       setBoards(response.data);
     } catch (error) {
@@ -44,9 +57,9 @@ export default function Dashboard({ user, onLogout }) {
     }
 
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       await axios.post(`${API}/boards`, newBoardData, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Board created successfully!");
       setShowNewBoard(false);
@@ -58,32 +71,48 @@ export default function Dashboard({ user, onLogout }) {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #e3f2fd 0%, #f0f4f8 100%)' }}>
+    <div
+      className="min-h-screen"
+      style={{
+        background: "linear-gradient(135deg, #e3f2fd 0%, #f0f4f8 100%)",
+      }}
+    >
       {/* Header */}
-      <header className="backdrop-blur-md bg-white/70 shadow-sm sticky top-0 z-50" data-testid="dashboard-header">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Sparkles className="w-8 h-8" style={{ color: '#0288d1' }} />
-            <h1 className="text-2xl font-bold" style={{ color: '#0277bd' }}>TaskWeaver</h1>
+      <header
+        className="backdrop-blur-md bg-white/70 shadow-sm sticky top-0 z-50"
+        data-testid="dashboard-header"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center sm:justify-start">
+            <Sparkles className="w-7 h-7 sm:w-8 sm:h-8" style={{ color: "#0288d1" }} />
+            <h1
+              className="text-2xl sm:text-3xl font-bold"
+              style={{ color: "#0277bd" }}
+            >
+              TaskHandler
+            </h1>
           </div>
-          <div className="flex items-center gap-3">
-            <span className="text-sm" style={{ color: '#0277bd' }}>Welcome, {user?.name}</span>
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 w-full sm:w-auto">
+            <span
+              className="text-sm sm:text-base text-center"
+              style={{ color: "#0277bd" }}
+            >
+              Welcome, {user?.name}
+            </span>
             <Button
               variant="outline"
-              data-testid="inbox-button"
-              onClick={() => navigate('/inbox')}
-              className="border-2"
-              style={{ borderColor: '#0288d1', color: '#0277bd' }}
+              onClick={() => navigate("/inbox")}
+              className="border-2 text-sm sm:text-base"
+              style={{ borderColor: "#0288d1", color: "#0277bd" }}
             >
               <InboxIcon className="w-4 h-4 mr-2" />
               Inbox
             </Button>
             <Button
               variant="outline"
-              data-testid="logout-button"
               onClick={onLogout}
-              className="border-2"
-              style={{ borderColor: '#d32f2f', color: '#d32f2f' }}
+              className="border-2 text-sm sm:text-base"
+              style={{ borderColor: "#d32f2f", color: "#d32f2f" }}
             >
               <LogOut className="w-4 h-4 mr-2" />
               Logout
@@ -92,55 +121,70 @@ export default function Dashboard({ user, onLogout }) {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 className="text-3xl font-bold mb-2" style={{ color: '#01579b' }}>Your Boards</h2>
-            <p className="text-base" style={{ color: '#0277bd' }}>Organize your tasks and projects</p>
+      {/* Main */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+          <div className="text-center sm:text-left w-full sm:w-auto">
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2"
+              style={{ color: "#01579b" }}
+            >
+              Your Boards
+            </h2>
+            <p
+              className="text-sm sm:text-base"
+              style={{ color: "#0277bd" }}
+            >
+              Organize your tasks and projects
+            </p>
           </div>
           <Dialog open={showNewBoard} onOpenChange={setShowNewBoard}>
             <DialogTrigger asChild>
-              <Button 
-                data-testid="create-board-button"
-                className="text-white font-medium"
-                style={{ background: '#0288d1' }}
+              <Button
+                className="text-white font-medium w-full sm:w-auto"
+                style={{ background: "#0288d1" }}
               >
                 <Plus className="w-5 h-5 mr-2" />
                 New Board
               </Button>
             </DialogTrigger>
-            <DialogContent data-testid="new-board-dialog">
+            <DialogContent className="max-w-sm sm:max-w-md mx-auto">
               <DialogHeader>
                 <DialogTitle>Create New Board</DialogTitle>
-                <DialogDescription>Start organizing your tasks with a new board</DialogDescription>
+                <DialogDescription>
+                  Start organizing your tasks with a new board
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 mt-4">
                 <div className="space-y-2">
                   <Label htmlFor="board-title">Board Title</Label>
                   <Input
                     id="board-title"
-                    data-testid="board-title-input"
                     placeholder="e.g., Marketing Campaign"
                     value={newBoardData.title}
-                    onChange={(e) => setNewBoardData({ ...newBoardData, title: e.target.value })}
+                    onChange={(e) =>
+                      setNewBoardData({ ...newBoardData, title: e.target.value })
+                    }
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="board-description">Description (Optional)</Label>
                   <Input
                     id="board-description"
-                    data-testid="board-description-input"
                     placeholder="What's this board about?"
                     value={newBoardData.description}
-                    onChange={(e) => setNewBoardData({ ...newBoardData, description: e.target.value })}
+                    onChange={(e) =>
+                      setNewBoardData({
+                        ...newBoardData,
+                        description: e.target.value,
+                      })
+                    }
                   />
                 </div>
-                <Button 
+                <Button
                   onClick={createBoard}
-                  data-testid="submit-new-board"
                   className="w-full text-white"
-                  style={{ background: '#0288d1' }}
+                  style={{ background: "#0288d1" }}
                 >
                   Create Board
                 </Button>
@@ -152,35 +196,55 @@ export default function Dashboard({ user, onLogout }) {
         {/* Boards Grid */}
         {loading ? (
           <div className="text-center py-12" data-testid="loading-boards">
-            <p style={{ color: '#0277bd' }}>Loading boards...</p>
+            <p style={{ color: "#0277bd" }}>Loading boards...</p>
           </div>
         ) : boards.length === 0 ? (
-          <div className="text-center py-12" data-testid="no-boards-message">
-            <Sparkles className="w-16 h-16 mx-auto mb-4" style={{ color: '#0288d1', opacity: 0.5 }} />
-            <p className="text-lg mb-4" style={{ color: '#0277bd' }}>No boards yet. Create your first board to get started!</p>
+          <div className="text-center py-12 px-4">
+            <Sparkles
+              className="w-12 sm:w-16 h-12 sm:h-16 mx-auto mb-4"
+              style={{ color: "#0288d1", opacity: 0.5 }}
+            />
+            <p
+              className="text-base sm:text-lg mb-4"
+              style={{ color: "#0277bd" }}
+            >
+              No boards yet. Create your first board to get started!
+            </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-testid="boards-grid">
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            data-testid="boards-grid"
+          >
             {boards.map((board, index) => (
               <Card
                 key={board.id}
-                data-testid={`board-card-${board.id}`}
-                className="card-hover cursor-pointer slide-in shadow-lg border-2"
-                style={{ 
+                className="cursor-pointer shadow-lg border-2 hover:scale-[1.02] transition-transform duration-300"
+                style={{
                   animationDelay: `${index * 0.1}s`,
-                  borderColor: '#b3e5fc',
-                  background: board.background || '#ffffff'
+                  borderColor: "#b3e5fc",
+                  background: board.background || "#ffffff",
                 }}
                 onClick={() => navigate(`/board/${board.id}`)}
               >
                 <CardHeader>
-                  <CardTitle className="text-xl" style={{ color: '#01579b' }}>{board.title}</CardTitle>
+                  <CardTitle
+                    className="text-lg sm:text-xl"
+                    style={{ color: "#01579b" }}
+                  >
+                    {board.title}
+                  </CardTitle>
                   {board.description && (
-                    <CardDescription className="line-clamp-2">{board.description}</CardDescription>
+                    <CardDescription className="line-clamp-2">
+                      {board.description}
+                    </CardDescription>
                   )}
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center gap-2 text-sm" style={{ color: '#0277bd' }}>
+                  <div
+                    className="flex items-center gap-2 text-sm"
+                    style={{ color: "#0277bd" }}
+                  >
                     <span>{board.members?.length || 0} member(s)</span>
                   </div>
                 </CardContent>

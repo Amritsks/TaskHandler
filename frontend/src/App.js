@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import "@/App.css";
+import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import BoardView from "./pages/BoardView";
 import Inbox from "./pages/Inbox";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
