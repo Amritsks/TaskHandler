@@ -3,7 +3,7 @@ fastapi==0.115.0
 uvicorn==0.30.0
 
 # === Database ===
-pymongo==4.10.1
+pymongo==4.9.1
 motor==3.6.0
 dnspython==2.8.0
 
